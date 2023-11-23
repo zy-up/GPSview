@@ -22,6 +22,9 @@ from collections import deque
 class MyApp(App):
     def __init__(self, ser, GPS_info_queue, Setting_queue, **kwargs):
         super().__init__(**kwargs)
+        # 程序名
+        self.title = 'GPSView'  # 设置应用程序窗口的标题
+
         # 程序结束时间标志
         self.stop_event = threading.Event()
 
@@ -54,8 +57,11 @@ class MyApp(App):
         # 创建串口部分的布局
         self.serial_section = BoxLayout(orientation='vertical', size_hint_y=None, height=120,size_hint_x=None, width=300)
         self.serial_spinner = Spinner(text='Select Port', size_hint_x=None, width=300, background_color=(0, 1, 0, 1), padding=1, font_size='20sp')
+        self.serial_baudrate = Spinner(text='9600', values={'9600', '115200'}, size_hint_x=None, width=300, background_color=(0, 1, 0, 1), padding=1, font_size='20sp')
         self.serial_button = Button(text='Start', size_hint_x=None, width=300, background_color=(0, 0, 1, 1), padding=1, font_size='20sp')
+        
         self.serial_section.add_widget(self.serial_spinner)
+        self.serial_section.add_widget(self.serial_baudrate)
         self.serial_section.add_widget(self.serial_button)
         self.serial_button.bind(on_press=self.toggle_serial_port)
 
@@ -282,7 +288,7 @@ class MyApp(App):
                 print(selected_port)
                 try:
                     self.ser.port = selected_port
-                    self.ser.baudrate = 9600
+                    self.ser.baudrate = self.serial_baudrate.text
                     self.ser.open()
                     instance.text = 'Stop'
                 except:

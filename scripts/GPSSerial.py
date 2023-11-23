@@ -13,11 +13,17 @@ class RTKGPSReader:
         self.ser = serial.Serial(port, baudrate)
 
     def read_line(self):
-        """读取串口中的一行数据"""
+        """读取串口中的一行数据，尝试不同的编码"""
         if self.ser and self.ser.is_open:
-            return self.ser.readline().decode('utf-8').strip()
-        else:
-            return None
+            line = self.ser.readline()
+            for encoding in ['utf-8', 'ascii', 'latin-1']:
+                try:
+                    return line.decode(encoding).strip()
+                except UnicodeDecodeError:
+                    continue
+            print("Warning: 无法解码数据")
+        return None
+
 
     def parse_line(self, line):
         """解析NMEA句子"""
