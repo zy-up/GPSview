@@ -1,0 +1,4 @@
+pyserial
+pyproj
+kivy
+kivy-garden
