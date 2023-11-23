@@ -5,9 +5,9 @@ from kivy.clock import Clock
 from queue import Queue 
 
 class SatelliteMapApp(App):
-    def __init__(self, position_queue, **kwargs):
+    def __init__(self, GPS_info_queue, **kwargs):
         super().__init__(**kwargs)
-        self.position_queue = position_queue
+        self.GPS_info_queue = GPS_info_queue
         self.last_known_position = (35.176148385, 126.90049612)  # 初始位置
 
     def update_marker_position(self, *args):
@@ -23,8 +23,8 @@ class SatelliteMapApp(App):
 
     def get_new_position(self):
         # 如果队列中有新的位置数据，则更新最后已知的位置
-        if not self.position_queue.empty():
-            self.last_known_position = self.position_queue.get_nowait()
+        if not self.GPS_info_queue.empty():
+            self.last_known_position = self.GPS_info_queue.get_nowait()
         
         return self.last_known_position  # 始终返回最后已知的位置
 
@@ -40,5 +40,5 @@ class SatelliteMapApp(App):
         return self.map_view
 
 if __name__ == '__main__':
-    position_queue = Queue()
-    SatelliteMapApp(position_queue).run()
+    GPS_info_queue = Queue()
+    SatelliteMapApp(GPS_info_queue).run()

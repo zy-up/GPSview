@@ -4,29 +4,27 @@ from pyproj import Transformer
  
 class RTKGPSReader:
     def __init__(self, ser):
-        # self.port = port
-        # self.baudrate = baudrate
         epsg_code = "epsg:5186"
         self.ser = ser
         self.transformer = Transformer.from_crs("epsg:4326", epsg_code, always_xy=True)
 
-    # def open_port(self):
+    # def open_port(self, port, baudrate):
     #     """打开串口连接"""
-    #     self.ser = serial.Serial(self.port, self.baudrate)
+    #     self.ser = serial.Serial(port, baudrate)
 
     def read_line(self):
         """读取串口中的一行数据"""
-        if self.ser:
+        if self.ser and self.ser.is_open:
             return self.ser.readline().decode('utf-8').strip()
         else:
-            raise Exception("Serial port is not open")
+            return None
 
     def parse_line(self, line):
         """解析NMEA句子"""
         if line.startswith('$GNGGA'):
             # 这里可以根据需要解析更多字段
             parts = line.split(',')
-            if  parts[2]:
+            if  parts[7]!='00':
                 return {
                     'time': parts[1],
                     'latitude': parts[2],
@@ -56,6 +54,9 @@ class RTKGPSReader:
         if direction in ['S', 'W']:
             dd *= -1
         return dd
+
+    def changeepsg(self, epsg_code):
+        self.transformer = Transformer.from_crs("epsg:4326", epsg_code, always_xy=True)
 
     def convert_to_plane_coordinate(self, latitude, lat_dir, longitude, lon_dir):
         """转换经纬度为平面坐标系坐标"""
