@@ -11,4 +11,9 @@ pip inatall requirements.txt
 ```bash
 garden install mapview
 ```
+## 运行主函数
+
+```bash
+python /scripts/main.py
+```
 
