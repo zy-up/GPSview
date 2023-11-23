@@ -8,9 +8,9 @@ class RTKGPSReader:
         self.ser = ser
         self.transformer = Transformer.from_crs("epsg:4326", epsg_code, always_xy=True)
 
-    # def open_port(self, port, baudrate):
-    #     """打开串口连接"""
-    #     self.ser = serial.Serial(port, baudrate)
+    def open_port(self, port, baudrate):
+        """打开串口连接"""
+        self.ser = serial.Serial(port, baudrate)
 
     def read_line(self):
         """读取串口中的一行数据"""
@@ -66,27 +66,27 @@ class RTKGPSReader:
         return lat_dd, lon_dd, easting, northing
 
 
-    # def close_port(self):
-    #     """关闭串口连接"""
-    #     if self.ser:
-    #         self.ser.close()
+    def close_port(self):
+        """关闭串口连接"""
+        if self.ser:
+            self.ser.close()
 
 
-# if __name__ == '__main__':
-#     # 使用示例
-#     gps_reader = RTKGPSReader()  # 替换为你的串口
-#     gps_reader.open_port()
+if __name__ == '__main__':
+    # 使用示例
+    gps_reader = RTKGPSReader()  # 替换为你的串口
+    gps_reader.open_port('/dev/ttyUSB0', 9600)
 
-#     try:
-#         while True:
-#             line = gps_reader.read_line()
-#             print(line)
-#             data = gps_reader.parse_line(line)
-#             if data:
-#                 print(data)
+    try:
+        while True:
+            line = gps_reader.read_line()
+            print(line)
+            data = gps_reader.parse_line(line)
+            if data:
+                print(data)
 
-#                 lat_dd, lon_dd, easting, northing = gps_reader.convert_to_plane_coordinate(data['latitude'], data['latitude_direction'], data['longitude'], data['longitude_direction'])
-#                 print(f"Easting: {easting}, Northing: {northing}")
+                lat_dd, lon_dd, easting, northing = gps_reader.convert_to_plane_coordinate(data['latitude'], data['latitude_direction'], data['longitude'], data['longitude_direction'])
+                print(f"Easting: {easting}, Northing: {northing}")
 
-#     finally:
-#         gps_reader.close_port()
+    finally:
+        gps_reader.close_port()

@@ -185,7 +185,7 @@ class MyApp(App):
 
 
     def setup_GPSpoint_logger(self, name):
-        """设置自定义日志记录器"""
+        # 设置自定义日志记录器
         current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         log_directory = "./log"
         if not os.path.exists(log_directory):
@@ -218,6 +218,7 @@ class MyApp(App):
                 self.GPSlogger.info("This is an info message.")
             else:
                 print("串口未打开")
+
 
     # 定时更新数据
     def update_data(self, *args):

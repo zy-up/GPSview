@@ -13,7 +13,7 @@ def gps_thread_function(gps_reader, GPS_info_queue, Setting_queue, ser, stop_eve
 
     print("准备读取GPS串口数据")
     while not stop_event.is_set():
-        sleep(0.01)
+        sleep(0.01) # 刷新频率为100HZ
 
         # 获取UI设置参数
         if not Setting_queue.empty():
@@ -25,25 +25,22 @@ def gps_thread_function(gps_reader, GPS_info_queue, Setting_queue, ser, stop_eve
         if ser.is_open:
             try:   
                 line = gps_reader.read_line()
+                print(line)
             except:
                 print("GPS串口关闭退出")
-            # 打印串口原始数据
-            print(line)
+            # 解析原始GPS数据信息
             data = gps_reader.parse_line(line)
             if data:
-                # 打印接收的GPS解析数据
-                # print(data)
                 # 将度分坐标数据转变为十进制与平面坐标数据
                 lat_dd, lon_dd, easting, northing = gps_reader.convert_to_plane_coordinate(
                     data['latitude'], data['latitude_direction'], data['longitude'], data['longitude_direction'])
+
                 # 将数据压栈，使其能够在其他线程中被读取
                 GPS_info_queue.put((data, lat_dd, lon_dd, easting, northing))
-                # 输出平面坐标数据
-                # print(f"Easting: {easting}, Northing: {northing}")
 
+                # 保存GPS日志
                 log_message = f"Data: {data}, Latitude: {lat_dd}, Longitude: {lon_dd}, Easting: {easting}, Northing: {northing}"
                 GPSdatalogger.info(log_message)
-
 
 
 if __name__ == '__main__':
@@ -51,6 +48,7 @@ if __name__ == '__main__':
     GPS_info_queue = Queue()
     Setting_queue = Queue()
     
+    # 初始化日志
     GPSdatalogger = setup_GPS_logger("MyAppLogger")
     GPSdatalogger.info("This is an info message.")
 
