@@ -1,6 +1,6 @@
 from GPSSerial import RTKGPSReader
 from UI  import MyApp
-from logtest import setup_GPS_logger
+from logtool import setup_GPS_logger
 
 import threading
 from time import sleep
