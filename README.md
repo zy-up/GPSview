@@ -1,9 +1,11 @@
 # GPSview
+please install in conda environment
 
 ## 安装依赖
 ```bash
-pip inatall requirements.txt
+pip install -r requirements.txt
 ```
+if can not install, please installl one by one
 
 ### 检查 mapview 的安装
 确保您已安装 mapview 组件。可以通过 Kivy Garden 工具安装它，如果您还没有这样做：
@@ -24,6 +26,6 @@ sudo chmod o+w /path/to/installation/directory
 ## 运行主函数
 
 ```bash
-python /scripts/main.py
+python scripts/main.py
 ```
 
