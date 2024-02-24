@@ -27,7 +27,7 @@ class RTKGPSReader:
 
     def parse_line(self, line):
         """解析NMEA句子"""
-        if line.startswith('$GNGGA'):
+        if line.startswith('$GNGGA') or line.startswith('$GPGGA'):
             # 这里可以根据需要解析更多字段
             parts = line.split(',')
             if  parts[7]!='00':
