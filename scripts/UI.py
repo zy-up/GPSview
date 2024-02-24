@@ -202,6 +202,10 @@ class MyApp(App):
         logger = logging.getLogger(name)
         logger.setLevel(logging.INFO)
 
+        # 移除老的处理器
+        for handler in logger.handlers[:]:
+            logger.removeHandler(handler)
+        
         # 创建文件处理器
         file_handler = logging.FileHandler(log_filename)
         file_handler.setLevel(logging.INFO)
@@ -264,11 +268,13 @@ class MyApp(App):
 
             # 如果RecorderFlag置1，开始录制
             if self.RecorderFlag:
+                self.GPSlogger.disabled = False
                 log_message = f"Data: {self.data}, Latitude: {self.lat_dd}, Longitude: {self.lon_dd}, Easting: {self.easting}, Northing: {self.northing}"
                 self.GPSlogger.info(log_message)
                 self.RecorderFlag+=1
                 if self.RecorderFlag == int(self.Num.text):
                     self.RecorderFlag = 0
+                    self.GPSlogger.disabled = True
                     self.Recorder_Button.text = 'Start'
 
     
