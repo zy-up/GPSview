@@ -133,12 +133,12 @@ class MyApp(App):
         self.DGPS.bind(active=self.on_checkbox_active)  # 绑定事件处理函数
         self.filter_section.add_widget(self.DGPS)
         # 是否过滤Float状态数据
-        self.filter_section.add_widget(Label(text='Float (4):', font_size='20sp'))
+        self.filter_section.add_widget(Label(text='Float (5):', font_size='20sp'))
         self.Float = CheckBox(active=True)
         self.Float.bind(active=self.on_checkbox_active)  # 绑定事件处理函数
         self.filter_section.add_widget(self.Float)
         # 是否过滤Fixed状态数据
-        self.filter_section.add_widget(Label(text='Fixed (5):', font_size='20sp'))
+        self.filter_section.add_widget(Label(text='Fixed (4):', font_size='20sp'))
         self.Fixed = CheckBox(active=True)
         self.Fixed.bind(active=self.on_checkbox_active)  # 绑定事件处理函数
         self.filter_section.add_widget(self.Fixed)
