@@ -57,7 +57,7 @@ class MyApp(App):
         # 创建串口部分的布局
         self.serial_section = BoxLayout(orientation='vertical', size_hint_y=None, height=120,size_hint_x=None, width=300)
         self.serial_spinner = Spinner(text='Select Port', size_hint_x=None, width=300, background_color=(0, 1, 0, 1), padding=1, font_size='20sp')
-        self.serial_baudrate = Spinner(text='9600', values={'9600', '115200'}, size_hint_x=None, width=300, background_color=(0, 1, 0, 1), padding=1, font_size='20sp')
+        self.serial_baudrate = Spinner(text='115200', values={'9600', '115200'}, size_hint_x=None, width=300, background_color=(0, 1, 0, 1), padding=1, font_size='20sp')
         self.serial_button = Button(text='Start', size_hint_x=None, width=300, background_color=(0, 0, 1, 1), padding=1, font_size='20sp')
         
         self.serial_section.add_widget(self.serial_spinner)
