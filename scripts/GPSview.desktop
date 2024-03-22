@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Exec=python /home/sibl/Codes/GPSview/scripts/main.py
+Name=GPSview
+Comment=My Python Application Description
+Icon=/home/sibl/Codes/GPSview/scripts/logo.png
+
